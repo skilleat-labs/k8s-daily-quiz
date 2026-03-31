@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>감테크 Daily Quiz | 쿠버네티스</title>
+<meta property="og:title" content="감테크 Daily 쿠버네티스 퀴즈">
+<meta property="og:description" content="오늘 배운 쿠버네티스 내용을 퀴즈로 확인해보세요!">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #028090;
+    --teal-dark: #026775;
+    --teal-light: #e6f4f6;
+    --teal-glow: rgba(2, 128, 144, 0.12);
+    --correct: #0a8754;
+    --correct-bg: #e8f5ee;
+    --wrong: #c7352e;
+    --wrong-bg: #fceaea;
+    --bg: #f7f8fa;
+    --card: #ffffff;
+    --text: #1a1a2e;
+    --text-sub: #5a5a72;
+    --border: #e2e4e9;
+    --radius: 14px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100dvh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Header */
+  .header {
+    background: var(--teal);
+    padding: 20px 20px 24px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::after {
+    content: '⎈';
+    position: absolute;
+    right: -10px;
+    top: -20px;
+    font-size: 120px;
+    opacity: 0.08;
+    line-height: 1;
+  }
+  .header-brand {
+    font-size: 13px;
+    font-weight: 500;
+    opacity: 0.85;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  .header-title {
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+  .header-desc {
+    font-size: 13px;
+    opacity: 0.8;
+    line-height: 1.5;
+  }
+  .header-date {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 10px;
+    backdrop-filter: blur(4px);
+  }
+
+  /* Progress */
+  .progress-bar {
+    background: var(--card);
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .progress-track {
+    flex: 1;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--teal);
+    border-radius: 3px;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 0%;
+  }
+  .progress-text {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--teal);
+    min-width: 42px;
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Container */
+  .container {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+
+  /* Question Card */
+  .question-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 24px 20px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    border: 1px solid var(--border);
+    animation: slideUp 0.35s ease-out;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .q-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--teal);
+    background: var(--teal-light);
+    padding: 4px 10px;
+    border-radius: 6px;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .q-text {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    word-break: keep-all;
+  }
+
+  /* OX Buttons */
+  .ox-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .ox-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .ox-btn:active { transform: scale(0.97); }
+  .ox-btn .symbol {
+    font-size: 36px;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .ox-btn .label { font-size: 13px; font-weight: 500; color: var(--text-sub); }
+  .ox-btn.o-btn .symbol { color: #1a7fd4; }
+  .ox-btn.x-btn .symbol { color: var(--wrong); }
+  .ox-btn:hover { border-color: var(--teal); background: var(--teal-glow); }
+
+  /* Multiple Choice */
+  .mc-group { display: flex; flex-direction: column; gap: 8px; }
+  .mc-btn {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .mc-btn:active { transform: scale(0.98); }
+  .mc-btn:hover { border-color: var(--teal); background: var(--teal-glow); }
+  .mc-num {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-sub);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .mc-text {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.55;
+    padding-top: 2px;
+    font-family: 'JetBrains Mono', 'Noto Sans KR', monospace;
+    word-break: break-all;
+  }
+
+  /* Answer States */
+  .btn-correct {
+    border-color: var(--correct) !important;
+    background: var(--correct-bg) !important;
+  }
+  .btn-correct .mc-num { background: var(--correct); color: white; }
+  .btn-wrong {
+    border-color: var(--wrong) !important;
+    background: var(--wrong-bg) !important;
+  }
+  .btn-wrong .mc-num { background: var(--wrong); color: white; }
+  .btn-disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  /* Explanation */
+  .explanation {
+    margin-top: 16px;
+    padding: 14px 16px;
+    border-radius: 10px;
+    font-size: 13.5px;
+    line-height: 1.7;
+    animation: fadeIn 0.3s ease;
+    word-break: keep-all;
+  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .explanation.correct {
+    background: var(--correct-bg);
+    border-left: 3px solid var(--correct);
+    color: #065535;
+  }
+  .explanation.wrong {
+    background: var(--wrong-bg);
+    border-left: 3px solid var(--wrong);
+    color: #6b1a16;
+  }
+  .explanation-icon { font-weight: 700; margin-right: 4px; }
+
+  /* Result Screen */
+  .result-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 32px 24px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border: 1px solid var(--border);
+    animation: slideUp 0.4s ease-out;
+  }
+  .result-emoji { font-size: 52px; margin-bottom: 12px; }
+  .result-title {
+    font-size: 22px;
+    font-weight: 900;
+    margin-bottom: 6px;
+  }
+  .result-subtitle {
+    font-size: 14px;
+    color: var(--text-sub);
+    margin-bottom: 24px;
+  }
+  .result-score {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
+    background: var(--teal-light);
+    padding: 12px 28px;
+    border-radius: 40px;
+    margin-bottom: 24px;
+  }
+  .result-score .num {
+    font-size: 40px;
+    font-weight: 900;
+    color: var(--teal);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .result-score .total {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--teal-dark);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .result-msg {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-sub);
+    margin-bottom: 24px;
+    word-break: keep-all;
+  }
+  .result-review {
+    margin-top: 20px;
+    text-align: left;
+  }
+  .result-review h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+  .review-item {
+    padding: 12px 14px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .review-item.wrong-review {
+    background: var(--wrong-bg);
+    border-left: 3px solid var(--wrong);
+  }
+
+  /* Buttons */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: var(--teal);
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Noto Sans KR', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn-primary:hover { background: var(--teal-dark); }
+  .btn-primary:active { transform: scale(0.97); }
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    color: var(--teal);
+    border: 2px solid var(--teal);
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Noto Sans KR', sans-serif;
+    margin-top: 8px;
+  }
+  .btn-secondary:hover { background: var(--teal-glow); }
+
+  /* Loading */
+  .loading {
+    text-align: center;
+    padding: 60px 20px;
+  }
+  .spinner {
+    width: 36px; height: 36px;
+    border: 3px solid var(--border);
+    border-top-color: var(--teal);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    margin: 0 auto 16px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text { font-size: 14px; color: var(--text-sub); }
+
+  /* Error */
+  .error-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 40px 24px;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .error-card .emoji { font-size: 48px; margin-bottom: 12px; }
+  .error-card h2 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+  .error-card p { font-size: 14px; color: var(--text-sub); line-height: 1.6; }
+
+  /* Date nav */
+  .date-nav {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 16px;
+    flex-wrap: wrap;
+  }
+  .date-nav select {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    background: white;
+    color: var(--text);
+    cursor: pointer;
+  }
+  .date-nav select:focus {
+    outline: none;
+    border-color: var(--teal);
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 24px 20px 32px;
+    font-size: 12px;
+    color: var(--text-sub);
+  }
+  .footer a { color: var(--teal); text-decoration: none; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-brand">스킬잇 DAILY QUIZ</div>
+  <div class="header-title" id="quizTitle">쿠버네티스 데일리 퀴즈</div>
+  <div class="header-desc" id="quizDesc">오늘 배운 내용을 확인해보세요!</div>
+  <div class="header-date" id="quizDate"></div>
+</div>
+
+<div class="progress-bar" id="progressBar" style="display:none;">
+  <div class="progress-track">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+  <div class="progress-text" id="progressText">0/0</div>
+</div>
+
+<div class="container" id="app">
+  <div class="loading">
+    <div class="spinner"></div>
+    <div class="loading-text">퀴즈를 불러오는 중...</div>
+  </div>
+</div>
+
+<div class="footer">
+  <a href="https://skilleat.com" target="_blank">스킬잇</a> · <a href="https://youtube.com/@feeltechedu" target="_blank">감테크 유튜브</a> · 감 잡아주는 테크트레이너
+</div>
+
+<script>
+const QUIZ_BASE = './quizzes';
+let quizData = null;
+let currentQ = 0;
+let score = 0;
+let answers = [];
+
+// Get date from URL param or use today
+function getTargetDate() {
+  const params = new URLSearchParams(window.location.search);
+  const d = params.get('date');
+  if (d && /^\d{4}-\d{2}-\d{2}$/.test(d)) return d;
+  const now = new Date();
+  const y = now.getFullYear();
+  const mo = String(now.getMonth() + 1).padStart(2, '0');
+  const dy = String(now.getDate()).padStart(2, '0');
+  return `${y}-${mo}-${dy}`;
+}
+
+async function loadQuiz(date) {
+  const app = document.getElementById('app');
+  try {
+    const res = await fetch(`${QUIZ_BASE}/${date}.json`);
+    if (!res.ok) throw new Error('not found');
+    quizData = await res.json();
+    currentQ = 0;
+    score = 0;
+    answers = [];
+
+    document.getElementById('quizTitle').textContent = quizData.title;
+    document.getElementById('quizDesc').textContent = quizData.description;
+    document.getElementById('quizDate').textContent = quizData.date;
+    document.getElementById('progressBar').style.display = 'flex';
+    updateProgress();
+    renderQuestion();
+  } catch (e) {
+    document.getElementById('progressBar').style.display = 'none';
+    app.innerHTML = `
+      <div class="error-card">
+        <div class="emoji">📭</div>
+        <h2>오늘의 퀴즈가 아직 없어요!</h2>
+        <p>${date} 날짜의 퀴즈가 준비되지 않았습니다.<br>곧 업로드될 예정이니 조금만 기다려주세요!</p>
+      </div>`;
+  }
+}
+
+function updateProgress() {
+  const total = quizData.questions.length;
+  const pct = (currentQ / total) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `${currentQ}/${total}`;
+}
+
+function renderQuestion() {
+  const app = document.getElementById('app');
+  const q = quizData.questions[currentQ];
+  const num = currentQ + 1;
+  const total = quizData.questions.length;
+
+  let optionsHTML = '';
+  if (q.type === 'ox') {
+    optionsHTML = `
+      <div class="ox-group">
+        <button class="ox-btn o-btn" onclick="checkAnswer(true, this)">
+          <span class="symbol">O</span>
+          <span class="label">맞다</span>
+        </button>
+        <button class="ox-btn x-btn" onclick="checkAnswer(false, this)">
+          <span class="symbol">X</span>
+          <span class="label">틀리다</span>
+        </button>
+      </div>`;
+  } else {
+    const nums = ['①', '②', '③', '④'];
+    optionsHTML = `<div class="mc-group">${q.options.map((opt, i) => `
+      <button class="mc-btn" onclick="checkAnswer(${i}, this)">
+        <span class="mc-num">${nums[i]}</span>
+        <span class="mc-text">${opt}</span>
+      </button>`).join('')}</div>`;
+  }
+
+  app.innerHTML = `
+    <div class="question-card">
+      <div class="q-badge">${q.type === 'ox' ? 'OX' : '4지선다'} · Q${num}</div>
+      <div class="q-text">${q.question}</div>
+      ${optionsHTML}
+      <div id="explanation"></div>
+    </div>`;
+}
+
+function checkAnswer(selected, btnEl) {
+  const q = quizData.questions[currentQ];
+  const isCorrect = selected === q.answer;
+  if (isCorrect) score++;
+  answers.push({ question: q.question, selected, correct: q.answer, isCorrect, explanation: q.explanation });
+
+  // Disable all buttons
+  const card = btnEl.closest('.question-card');
+  const allBtns = card.querySelectorAll('.ox-btn, .mc-btn');
+  allBtns.forEach(b => b.classList.add('btn-disabled'));
+
+  // Highlight correct/wrong
+  if (q.type === 'ox') {
+    const [oBtn, xBtn] = card.querySelectorAll('.ox-btn');
+    if (q.answer === true) oBtn.classList.add('btn-correct');
+    else xBtn.classList.add('btn-correct');
+    if (!isCorrect) btnEl.classList.add('btn-wrong');
+  } else {
+    allBtns.forEach((b, i) => {
+      if (i === q.answer) b.classList.add('btn-correct');
+    });
+    if (!isCorrect) btnEl.classList.add('btn-wrong');
+  }
+
+  // Show explanation
+  const expEl = document.getElementById('explanation');
+  expEl.innerHTML = `
+    <div class="explanation ${isCorrect ? 'correct' : 'wrong'}">
+      <span class="explanation-icon">${isCorrect ? '✅' : '❌'}</span>
+      ${isCorrect ? '정답!' : '오답!'} ${q.explanation}
+    </div>`;
+
+  // Auto advance
+  setTimeout(() => {
+    currentQ++;
+    if (currentQ < quizData.questions.length) {
+      updateProgress();
+      renderQuestion();
+    } else {
+      updateProgress();
+      renderResult();
+    }
+  }, 2200);
+}
+
+function renderResult() {
+  const total = quizData.questions.length;
+  const pct = Math.round((score / total) * 100);
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('progressText').textContent = `${total}/${total}`;
+
+  let emoji, title, msg;
+  if (pct === 100) { emoji = '🏆'; title = '완벽해요!'; msg = '오늘 내용 확실히 이해하셨네요! 내일도 도전해주세요.'; }
+  else if (pct >= 60) { emoji = '👏'; title = '잘 하셨어요!'; msg = '거의 다 맞추셨네요. 틀린 부분만 한번 더 확인해보세요.'; }
+  else { emoji = '💪'; title = '다시 한번!'; msg = '오늘 내용을 다시 읽어보고 재도전해보세요!'; }
+
+  const wrongOnes = answers.filter(a => !a.isCorrect);
+  let reviewHTML = '';
+  if (wrongOnes.length > 0) {
+    reviewHTML = `
+      <div class="result-review">
+        <h3>📝 틀린 문제 다시보기</h3>
+        ${wrongOnes.map(a => `
+          <div class="review-item wrong-review">
+            <strong>${a.question}</strong><br>
+            ${a.explanation}
+          </div>`).join('')}
+      </div>`;
+  }
+
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div class="result-card">
+      <div class="result-emoji">${emoji}</div>
+      <div class="result-title">${title}</div>
+      <div class="result-subtitle">${quizData.title}</div>
+      <div class="result-score">
+        <span class="num">${score}</span>
+        <span class="total">/ ${total}</span>
+      </div>
+      <div class="result-msg">${msg}</div>
+      <button class="btn-primary" onclick="retryQuiz()">🔄 다시 풀기</button>
+      ${reviewHTML}
+    </div>`;
+}
+
+function retryQuiz() {
+  currentQ = 0;
+  score = 0;
+  answers = [];
+  updateProgress();
+  renderQuestion();
+}
+
+// Init
+loadQuiz(getTargetDate());
+</script>
+</body>
+</html>
