@@ -1,54 +1,54 @@
 {
-  "date": "2024-12-19",
-  "title": "쿠버네티스 Namespace 기본 개념과 활용",
-  "description": "오늘 배운 Namespace 내용을 확인해보세요!",
+  "date": "2026-04-01",
+  "title": "Pod의 모든 것과 pod 운영에 필요한 명령어꿀팁",
+  "description": "오늘 배운 내용을 확인해보세요!",
   "questions": [
     {
       "id": 1,
       "type": "ox",
-      "question": "같은 이름의 Service를 서로 다른 Namespace에 생성할 수 있다.",
+      "question": "Pod 내의 모든 컨테이너는 localhost를 통해 서로 통신할 수 있다.",
       "answer": true,
-      "explanation": "Namespace는 리소스를 논리적으로 구분하여 같은 이름의 리소스를 다른 Namespace에서 독립적으로 생성할 수 있습니다."
+      "explanation": "Pod 내의 컨테이너들은 동일한 네트워크를 공유하므로 localhost로 통신 가능합니다."
     },
     {
       "id": 2,
       "type": "ox",
-      "question": "Node와 PersistentVolume은 특정 Namespace에 속한다.",
+      "question": "Pod가 삭제되어도 그 안의 데이터는 자동으로 보존된다.",
       "answer": false,
-      "explanation": "Node와 PersistentVolume은 클러스터 레벨 리소스로 Namespace에 속하지 않습니다."
+      "explanation": "Pod는 일시적인 특성을 가지므로 삭제 시 데이터도 함께 사라집니다."
     },
     {
       "id": 3,
       "type": "ox",
-      "question": "kubectl delete namespace 명령어는 해당 Namespace 안의 모든 리소스를 함께 삭제한다.",
+      "question": "대부분의 경우 Pod 하나에는 하나의 컨테이너가 들어간다.",
       "answer": true,
-      "explanation": "Namespace 삭제 시 그 안의 모든 리소스가 함께 삭제되므로 실행 전 반드시 확인이 필요합니다."
+      "explanation": "일반적으로 Pod는 단일 컨테이너를 포함하며, 사이드카 패턴 등 특별한 경우에만 여러 컨테이너를 사용합니다."
     },
     {
       "id": 4,
       "type": "multiple",
-      "question": "쿠버네티스 시스템 컴포넌트들이 실행되는 기본 Namespace는?",
+      "question": "정상 실행되지 않는 Pod만 필터링해서 보는 명령어는?",
       "options": [
-        "default",
-        "kube-system",
-        "kube-public",
-        "kube-node-lease"
+        "kubectl get pods | grep -v Running",
+        "kubectl get pods --filter=error",
+        "kubectl get pods -o failed",
+        "kubectl describe pods --status=failed"
       ],
-      "answer": 1,
-      "explanation": "kube-system은 쿠버네티스 시스템 컴포넌트들이 실행되는 전용 Namespace입니다."
+      "answer": 0,
+      "explanation": "grep -v Running 옵션을 사용하면 Running 상태가 아닌 Pod들만 필터링해서 볼 수 있습니다."
     },
     {
       "id": 5,
       "type": "multiple",
-      "question": "현재 컨텍스트의 기본 Namespace를 development로 변경하는 명령어는?",
+      "question": "로컬 머신의 8080 포트를 Pod의 80 포트에 연결하는 올바른 명령어는?",
       "options": [
-        "kubectl set namespace development",
-        "kubectl config set-context --current --namespace=development",
-        "kubectl create namespace --default development",
-        "kubectl use namespace development"
+        "kubectl connect pod이름 8080:80",
+        "kubectl port-forward pod이름 8080:80",
+        "kubectl tunnel pod이름 80:8080",
+        "kubectl proxy pod이름 --port 8080:80"
       ],
       "answer": 1,
-      "explanation": "kubectl config set-context --current --namespace=development 명령어로 현재 컨텍스트의 기본 Namespace를 변경할 수 있습니다."
+      "explanation": "kubectl port-forward 명령어를 사용하여 로컬포트:Pod포트 순서로 포트를 연결할 수 있습니다."
     }
   ]
 }
