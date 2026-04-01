@@ -1,54 +1,54 @@
 {
   "date": "2026-04-01",
-  "title": "Pod의 모든 것과 pod 운영에 필요한 명령어꿀팁",
+  "title": "Pod의한계 replicaset,Deployment 이해 그리고 운영팁",
   "description": "오늘 배운 내용을 확인해보세요!",
   "questions": [
     {
       "id": 1,
       "type": "ox",
-      "question": "Pod 내의 모든 컨테이너는 localhost를 통해 서로 통신할 수 있다.",
-      "answer": true,
-      "explanation": "Pod 내의 컨테이너들은 동일한 네트워크를 공유하므로 localhost로 통신 가능합니다."
+      "question": "Pod 하나만 실행하면 해당 Pod가 종료되었을 때 자동으로 복구됩니다.",
+      "answer": false,
+      "explanation": "Pod는 가장 작은 배포 단위이지만 자동 복구 기능이 없어 종료되면 수동으로 재생성해야 합니다."
     },
     {
       "id": 2,
       "type": "ox",
-      "question": "Pod가 삭제되어도 그 안의 데이터는 자동으로 보존된다.",
-      "answer": false,
-      "explanation": "Pod는 일시적인 특성을 가지므로 삭제 시 데이터도 함께 사라집니다."
+      "question": "Deployment를 생성하면 자동으로 ReplicaSet이 생성되어 실제 Pod들을 관리합니다.",
+      "answer": true,
+      "explanation": "Deployment는 ReplicaSet을 관리하는 상위 컨트롤러로, 생성 시 자동으로 ReplicaSet을 만들어 Pod를 관리합니다."
     },
     {
       "id": 3,
       "type": "ox",
-      "question": "대부분의 경우 Pod 하나에는 하나의 컨테이너가 들어간다.",
-      "answer": true,
-      "explanation": "일반적으로 Pod는 단일 컨테이너를 포함하며, 사이드카 패턴 등 특별한 경우에만 여러 컨테이너를 사용합니다."
+      "question": "실제 운영환경에서는 Pod를 직접 생성해서 사용하는 것이 권장됩니다.",
+      "answer": false,
+      "explanation": "실제 운영에서는 Pod를 직접 생성하지 말고 반드시 Deployment를 사용해야 합니다."
     },
     {
       "id": 4,
       "type": "multiple",
-      "question": "정상 실행되지 않는 Pod만 필터링해서 보는 명령어는?",
+      "question": "ReplicaSet의 주요 역할로 올바르지 않은 것은?",
       "options": [
-        "kubectl get pods | grep -v Running",
-        "kubectl get pods --filter=error",
-        "kubectl get pods -o failed",
-        "kubectl describe pods --status=failed"
+        "지정된 개수의 Pod 복제본을 유지",
+        "Pod가 실패하면 자동으로 새로운 Pod 생성",
+        "롤링 업데이트와 롤백 자동 관리",
+        "replicas 값 조정으로 Pod 개수 확장/축소"
       ],
-      "answer": 0,
-      "explanation": "grep -v Running 옵션을 사용하면 Running 상태가 아닌 Pod들만 필터링해서 볼 수 있습니다."
+      "answer": 2,
+      "explanation": "ReplicaSet은 Pod 복제본 유지와 확장/축소는 담당하지만, 롤링 업데이트와 롤백은 Deployment가 관리하는 영역입니다."
     },
     {
       "id": 5,
       "type": "multiple",
-      "question": "로컬 머신의 8080 포트를 Pod의 80 포트에 연결하는 올바른 명령어는?",
+      "question": "이전 버전으로 롤백할 때 사용하는 kubectl 명령어는?",
       "options": [
-        "kubectl connect pod이름 8080:80",
-        "kubectl port-forward pod이름 8080:80",
-        "kubectl tunnel pod이름 80:8080",
-        "kubectl proxy pod이름 --port 8080:80"
+        "kubectl rollout restart",
+        "kubectl rollout undo",
+        "kubectl rollback deploy",
+        "kubectl revert deployment"
       ],
       "answer": 1,
-      "explanation": "kubectl port-forward 명령어를 사용하여 로컬포트:Pod포트 순서로 포트를 연결할 수 있습니다."
+      "explanation": "롤백이 필요할 때는 kubectl rollout undo 명령어를 사용하여 이전 버전으로 되돌릴 수 있습니다."
     }
   ]
 }
