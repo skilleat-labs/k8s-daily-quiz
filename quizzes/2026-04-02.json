@@ -1,0 +1,54 @@
+{
+  "date": "2024-12-19",
+  "title": "Pod의 한계, Replicaset과 deployment가 필요한 이유와 실무적인 특징",
+  "description": "오늘 배운 내용을 확인해보세요!",
+  "questions": [
+    {
+      "id": 1,
+      "type": "ox",
+      "question": "프로덕션 환경에서 Pod가 예상치 못하게 종료되면, 쿠버네티스가 자동으로 동일한 Pod를 다시 생성해준다.",
+      "answer": false,
+      "explanation": "Pod 자체는 영속성이 없어서 죽으면 자동으로 재생성되지 않습니다. 이것이 실무에서 Pod를 직접 사용하지 않는 핵심 이유입니다."
+    },
+    {
+      "id": 2,
+      "type": "ox",
+      "question": "Deployment로 애플리케이션을 업데이트할 때, 기존 Pod들이 모두 삭제된 후에 새로운 Pod들이 생성된다.",
+      "answer": false,
+      "explanation": "Deployment는 롤링 업데이트 방식으로 기존 Pod를 하나씩 점진적으로 교체하여 서비스 중단 없이 배포가 가능합니다."
+    },
+    {
+      "id": 3,
+      "type": "ox",
+      "question": "Deployment를 생성하면 내부적으로 ReplicaSet이 자동으로 만들어져서 실제 Pod들을 관리한다.",
+      "answer": true,
+      "explanation": "Deployment Controller가 ReplicaSet을 생성하고, ReplicaSet Controller가 실제 Pod들을 생성하고 관리하는 계층 구조로 동작합니다."
+    },
+    {
+      "id": 4,
+      "type": "multiple",
+      "question": "운영 중인 nginx Deployment에서 배포된 새 버전에 문제가 발생했을 때, 이전 버전으로 롤백하는 가장 적절한 kubectl 명령어는?",
+      "options": [
+        "kubectl rollout undo deployment/nginx",
+        "kubectl scale deployment nginx --replicas=0 && kubectl scale deployment nginx --replicas=3",
+        "kubectl delete deployment nginx && kubectl apply -f nginx-old.yaml",
+        "kubectl restart deployment/nginx --previous-version"
+      ],
+      "answer": 0,
+      "explanation": "kubectl rollout undo는 Deployment의 롤백 전용 명령어로, 이전 버전으로 안전하게 되돌릴 수 있습니다."
+    },
+    {
+      "id": 5,
+      "type": "multiple",
+      "question": "장애 상황에서 특정 Pod가 계속 재시작되고 있을 때, 해당 Pod를 관리하는 상위 리소스를 찾아 확인하려면 어떤 순서로 접근해야 하는가?",
+      "options": [
+        "Pod → Service → Deployment 순으로 확인",
+        "Pod → ReplicaSet → Deployment 순으로 확인",
+        "Pod → Deployment → ReplicaSet 순으로 확인",
+        "Pod → Node → Deployment 순으로 확인"
+      ],
+      "answer": 1,
+      "explanation": "Pod는 ReplicaSet에 의해 직접 관리되고, ReplicaSet은 Deployment에 의해 관리되므로 이 계층 구조를 따라 트러블슈팅해야 합니다."
+    }
+  ]
+}
