@@ -1,0 +1,54 @@
+{
+  "date": "2026-04-03",
+  "title": "deployment의 원리, 업데이트 전략, 실무에서 꼭 필요한 가이드라인",
+  "description": "오늘 배운 내용을 확인해보세요!",
+  "questions": [
+    {
+      "id": 1,
+      "type": "ox",
+      "question": "RollingUpdate 전략에서 maxUnavailable=1, maxSurge=1로 설정하면 replica가 3개인 경우 업데이트 중 동시에 최대 5개의 Pod가 실행될 수 있다.",
+      "answer": true,
+      "explanation": "기존 3개 중 1개가 삭제되고(maxUnavailable=1), 동시에 새로운 Pod 1개가 추가(maxSurge=1)되어 총 2+3=5개까지 실행 가능합니다."
+    },
+    {
+      "id": 2,
+      "type": "ox",
+      "question": "Deployment를 삭제하면 해당 Deployment가 생성한 모든 ReplicaSet과 Pod가 자동으로 함께 삭제된다.",
+      "answer": true,
+      "explanation": "Deployment는 ReplicaSet과 Pod의 소유자(owner)이므로 Deployment 삭제 시 하위 리소스들이 연쇄적으로 삭제됩니다."
+    },
+    {
+      "id": 3,
+      "type": "ox",
+      "question": "rolling update 중에 새로운 Pod가 Ready 상태가 되지 않으면 기존 Pod들은 계속 유지되어 서비스 중단이 발생하지 않는다.",
+      "answer": false,
+      "explanation": "새 Pod가 Ready 상태가 되지 않으면 롤링 업데이트가 중단되어 일부 기존 Pod는 이미 삭제된 상태로 남아있게 되어 가용 Pod 수가 줄어들 수 있습니다."
+    },
+    {
+      "id": 4,
+      "type": "multiple",
+      "question": "운영 중인 Deployment에서 rolling update가 진행되지 않고 멈춘 상황입니다. 원인을 파악하기 위해 가장 먼저 확인해야 할 명령어는?",
+      "options": [
+        "kubectl describe deployment <deployment-name>",
+        "kubectl get pods -o wide",
+        "kubectl rollout status deployment/<deployment-name>",
+        "kubectl logs deployment/<deployment-name>"
+      ],
+      "answer": 2,
+      "explanation": "kubectl rollout status 명령어로 배포 진행 상태와 대기 중인 이유를 먼저 확인한 후, 구체적인 Pod 상태나 이벤트를 추가로 조사하는 것이 효율적입니다."
+    },
+    {
+      "id": 5,
+      "type": "multiple",
+      "question": "데이터베이스 애플리케이션을 Deployment로 배포할 때 동시에 여러 인스턴스가 실행되면 데이터 정합성 문제가 발생할 수 있습니다. 이런 경우 적절한 업데이트 전략은?",
+      "options": [
+        "RollingUpdate with maxUnavailable=0, maxSurge=1",
+        "Recreate",
+        "RollingUpdate with maxUnavailable=1, maxSurge=0",
+        "RollingUpdate with maxUnavailable=50%, maxSurge=25%"
+      ],
+      "answer": 1,
+      "explanation": "데이터베이스와 같이 동시 실행 시 정합성 문제가 있는 애플리케이션은 Recreate 전략을 사용하여 모든 Pod를 종료한 후 새 버전을 시작해야 합니다."
+    }
+  ]
+}
