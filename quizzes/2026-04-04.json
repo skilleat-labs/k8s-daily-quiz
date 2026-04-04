@@ -1,0 +1,54 @@
+{
+  "date": "2026-04-04",
+  "title": "service의 필요성, 타입별 특징 및 실무에서 꼭 알아야하는 팁",
+  "description": "오늘 배운 내용을 확인해보세요!",
+  "questions": [
+    {
+      "id": 1,
+      "type": "ox",
+      "question": "Service를 생성하면 즉시 트래픽 처리가 가능하므로, readinessProbe 설정 없이도 운영 환경에서 안정적으로 사용할 수 있다.",
+      "answer": false,
+      "explanation": "Service는 생성 즉시 동작하지만 뒷단 Pod가 준비되지 않으면 트래픽이 실패하므로, readinessProbe를 반드시 설정해야 합니다."
+    },
+    {
+      "id": 2,
+      "type": "ox",
+      "question": "NodePort 타입의 Service는 30000-32767 포트 범위를 사용하며, 클러스터 내 어떤 노드의 IP로 접근해도 동일한 서비스에 연결된다.",
+      "answer": true,
+      "explanation": "NodePort는 지정된 포트 범위에서 모든 노드에 포트를 열어주므로, 어떤 노드로 접근해도 동일한 Service로 라우팅됩니다."
+    },
+    {
+      "id": 3,
+      "type": "ox",
+      "question": "ExternalName 타입의 Service는 클러스터 내부에서 외부 서비스로의 트래픽을 프록시하고 로드밸런싱을 수행한다.",
+      "answer": false,
+      "explanation": "ExternalName은 단순히 외부 서비스에 대한 CNAME 별칭을 제공할 뿐, 실제 프록시나 로드밸런싱 기능은 수행하지 않습니다."
+    },
+    {
+      "id": 4,
+      "type": "multiple",
+      "question": "운영 환경에서 웹 애플리케이션의 특정 사용자 세션을 동일한 Pod로 유지해야 하는 상황입니다. 어떤 설정을 사용해야 할까요?",
+      "options": [
+        "spec.sessionAffinity: ClientIP",
+        "spec.loadBalancer.sessionPersistence: true",
+        "spec.selector.stickySession: enabled",
+        "spec.ports.sessionBinding: true"
+      ],
+      "answer": 0,
+      "explanation": "sessionAffinity를 ClientIP로 설정하면 동일한 클라이언트 IP의 요청을 같은 Pod로 라우팅하여 sticky session을 구현할 수 있습니다."
+    },
+    {
+      "id": 5,
+      "type": "multiple",
+      "question": "AWS EKS 환경에서 실행 중인 웹 애플리케이션을 안정적으로 외부에 노출하려고 합니다. 가장 권장되는 Service 타입은?",
+      "options": [
+        "ClusterIP와 Ingress 조합",
+        "LoadBalancer",
+        "NodePort",
+        "ExternalName"
+      ],
+      "answer": 1,
+      "explanation": "클라우드 환경에서는 LoadBalancer 타입이 AWS ELB 등 외부 로드밸런서를 자동 프로비저닝하여 가장 안정적인 외부 노출 방식을 제공합니다."
+    }
+  ]
+}
