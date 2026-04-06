@@ -1,0 +1,54 @@
+{
+  "date": "2026-04-07",
+  "title": "volume, pv, pvc, storageclass 개념 제대로 알기, 실무팁",
+  "description": "오늘 배운 내용을 확인해보세요!",
+  "questions": [
+    {
+      "id": 1,
+      "type": "ox",
+      "question": "StorageClass의 reclaimPolicy가 Delete로 설정되어 있으면, PVC를 삭제해도 실제 스토리지의 데이터는 보존된다.",
+      "answer": false,
+      "explanation": "Delete 정책은 PVC 삭제 시 PV와 실제 스토리지 데이터까지 모두 삭제하므로, 중요한 데이터는 Retain 정책을 사용해야 합니다."
+    },
+    {
+      "id": 2,
+      "type": "ox",
+      "question": "PVC에서 요청한 용량이 10GB일 때, 사용 가능한 PV 중 5GB 용량의 PV와도 바인딩이 가능하다.",
+      "answer": false,
+      "explanation": "PVC가 요청한 용량보다 작은 PV는 바인딩되지 않으며, 요청 용량 이상의 PV만 바인딩 대상이 됩니다."
+    },
+    {
+      "id": 3,
+      "type": "ox",
+      "question": "Dynamic Provisioning을 사용하면 관리자가 미리 PV를 생성하지 않아도 PVC 생성 시 자동으로 PV가 생성된다.",
+      "answer": true,
+      "explanation": "StorageClass를 통한 Dynamic Provisioning은 PVC 생성 요청에 따라 자동으로 PV를 생성하여 운영 효율성을 크게 향상시킵니다."
+    },
+    {
+      "id": 4,
+      "type": "multiple",
+      "question": "운영 중인 PVC의 용량을 20GB에서 50GB로 확장하려고 합니다. 이를 위해 확인해야 할 StorageClass 설정은 무엇입니까?",
+      "options": [
+        "allowVolumeExpansion: true",
+        "volumeBindingMode: WaitForFirstConsumer",
+        "reclaimPolicy: Retain",
+        "provisioner: kubernetes.io/aws-ebs"
+      ],
+      "answer": 0,
+      "explanation": "PVC 용량 확장을 위해서는 해당 StorageClass에 allowVolumeExpansion이 true로 설정되어 있어야 하며, 모든 스토리지 타입이 확장을 지원하지는 않습니다."
+    },
+    {
+      "id": 5,
+      "type": "multiple",
+      "question": "여러 노드에 분산된 Pod들이 동시에 같은 볼륨에 읽기/쓰기 접근해야 하는 상황입니다. 적절한 accessModes 설정은?",
+      "options": [
+        "ReadOnlyMany",
+        "ReadWriteMany",
+        "ReadWriteOnce",
+        "ReadWriteOncePod"
+      ],
+      "answer": 1,
+      "explanation": "여러 노드에서 동시에 읽기/쓰기가 필요한 경우 ReadWriteMany를 사용해야 하지만, 모든 스토리지가 이를 지원하지는 않으므로 사전 확인이 필요합니다."
+    }
+  ]
+}
