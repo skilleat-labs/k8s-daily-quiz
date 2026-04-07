@@ -1,0 +1,54 @@
+{
+  "date": "2026-04-08",
+  "title": "PV, PVC에 대한 실무 설계 팁",
+  "description": "오늘 배운 내용을 확인해보세요!",
+  "questions": [
+    {
+      "id": 1,
+      "type": "ox",
+      "question": "PVC에서 요청한 용량이 10GB인데 20GB PV와 바인딩되면, 실제 비용은 10GB 기준으로만 청구된다.",
+      "answer": false,
+      "explanation": "PV 크기인 20GB 전체에 대해 비용이 발생하므로, 용량 계획시 실제 필요량에 맞는 적절한 PV 크기 설정이 중요합니다."
+    },
+    {
+      "id": 2,
+      "type": "ox",
+      "question": "StatefulSet에서 volumeClaimTemplate을 사용하면 각 Pod마다 고유한 PVC가 자동 생성되고, Pod 재시작시에도 동일한 볼륨이 마운트된다.",
+      "answer": true,
+      "explanation": "volumeClaimTemplate은 각 Pod마다 독립적인 PVC를 생성하여 데이터 일관성을 보장하므로 데이터베이스 등에서 필수적입니다."
+    },
+    {
+      "id": 3,
+      "type": "ox",
+      "question": "대부분의 클라우드 프로바이더에서 ReadWriteMany Access Mode는 모든 스토리지 타입에서 완전히 지원된다.",
+      "answer": false,
+      "explanation": "ReadWriteMany는 제한적으로만 지원되므로 여러 Pod가 동시에 읽고 써야 하는 경우 사전에 지원 여부를 반드시 확인해야 합니다."
+    },
+    {
+      "id": 4,
+      "type": "multiple",
+      "question": "운영 중인 데이터베이스 Pod가 Pending 상태이고 'pod has unbound immediate PersistentVolumeClaims' 에러가 발생했습니다. 가장 먼저 확인해야 할 명령어는?",
+      "options": [
+        "kubectl get pv,pvc -o wide",
+        "kubectl describe pod <pod-name>",
+        "kubectl get storageclass",
+        "kubectl get nodes"
+      ],
+      "answer": 0,
+      "explanation": "PVC 바인딩 문제이므로 PV와 PVC의 상태, 용량, Access Mode 등을 먼저 확인하여 바인딩 실패 원인을 파악해야 합니다."
+    },
+    {
+      "id": 5,
+      "type": "multiple",
+      "question": "프로덕션 환경의 중요한 데이터를 저장하는 PV가 실수로 삭제될 위험을 방지하려면 Reclaim Policy를 어떻게 설정해야 할까요?",
+      "options": [
+        "Delete",
+        "Retain",
+        "Recycle",
+        "Preserve"
+      ],
+      "answer": 1,
+      "explanation": "Retain 정책은 PVC가 삭제되어도 PV와 데이터를 보존하므로 중요한 데이터의 실수 삭제를 방지할 수 있습니다."
+    }
+  ]
+}
