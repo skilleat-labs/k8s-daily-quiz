@@ -1,0 +1,54 @@
+{
+  "date": "2024-12-19",
+  "title": "ConfigMap 실무 운영 및 트러블슈팅",
+  "description": "ConfigMap의 실제 운영 환경에서의 동작 방식과 주의사항을 확인해보세요!",
+  "questions": [
+    {
+      "id": 1,
+      "type": "ox",
+      "question": "ConfigMap을 볼륨으로 마운트한 경우, ConfigMap 데이터가 변경되면 Pod 내부의 파일도 자동으로 업데이트된다.",
+      "answer": true,
+      "explanation": "볼륨으로 마운트된 ConfigMap 파일들은 kubelet에 의해 자동으로 업데이트되지만, 애플리케이션이 파일 변경을 감지하고 다시 읽도록 구현되어 있어야 실제로 적용됩니다."
+    },
+    {
+      "id": 2,
+      "type": "ox",
+      "question": "ConfigMap에 저장된 데이터는 base64 인코딩과 함께 암호화되어 etcd에 저장되므로 민감한 정보를 저장해도 안전하다.",
+      "answer": false,
+      "explanation": "ConfigMap 데이터는 base64로 인코딩되지만 암호화되지 않으므로, 민감한 정보는 반드시 Secret 리소스를 사용해야 합니다."
+    },
+    {
+      "id": 3,
+      "type": "ox",
+      "question": "ConfigMap을 환경 변수로 사용하는 경우, ConfigMap 데이터가 변경되면 Pod를 재시작해야 새로운 값이 반영된다.",
+      "answer": true,
+      "explanation": "환경 변수는 Pod 시작 시에만 설정되므로, ConfigMap 변경 후에는 Pod를 재시작해야 새로운 환경 변수 값이 적용됩니다."
+    },
+    {
+      "id": 4,
+      "type": "multiple",
+      "question": "운영 중인 애플리케이션의 ConfigMap을 안전하게 업데이트하려고 한다. 다음 중 가장 적절한 방법은?",
+      "options": [
+        "kubectl edit configmap으로 직접 수정 후 모든 Pod 삭제",
+        "새로운 ConfigMap 생성 후 Deployment의 Rolling Update 활용",
+        "ConfigMap 수정 후 kubectl rollout restart deployment 실행",
+        "ConfigMap 삭제 후 재생성하여 자동 반영 대기"
+      ],
+      "answer": 1,
+      "explanation": "새로운 ConfigMap을 생성하고 Deployment에서 참조를 변경한 후 Rolling Update를 수행하면, 기존 Pod들이 순차적으로 교체되어 무중단 배포가 가능합니다."
+    },
+    {
+      "id": 5,
+      "type": "multiple",
+      "question": "Pod가 'CreateContainerConfigError' 상태로 시작되지 않는 상황에서 ConfigMap 관련 문제를 확인하는 명령어는?",
+      "options": [
+        "kubectl logs pod-name",
+        "kubectl describe pod pod-name",
+        "kubectl get configmap -o yaml",
+        "kubectl exec -it pod-name -- env"
+      ],
+      "answer": 1,
+      "explanation": "CreateContainerConfigError는 주로 ConfigMap이나 Secret 참조 문제로 발생하며, kubectl describe pod 명령어로 Events 섹션에서 구체적인 오류 원인을 확인할 수 있습니다."
+    }
+  ]
+}
