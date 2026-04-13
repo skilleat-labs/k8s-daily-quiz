@@ -1,0 +1,54 @@
+{
+  "date": "2026-04-14",
+  "title": "Secret의 실사용 사례 및 실무에서 꼭 알아야할 것",
+  "description": "오늘 배운 내용을 확인해보세요!",
+  "questions": [
+    {
+      "id": 1,
+      "type": "ox",
+      "question": "Secret을 환경변수로 Pod에 주입한 후, Secret을 업데이트하면 실행 중인 Pod의 환경변수도 자동으로 갱신된다.",
+      "answer": false,
+      "explanation": "환경변수로 주입된 Secret은 Pod 시작 시점에 고정되며, Secret을 업데이트해도 실행 중인 Pod의 환경변수는 자동 갱신되지 않습니다."
+    },
+    {
+      "id": 2,
+      "type": "ox",
+      "question": "Secret을 볼륨으로 마운트하면 프로세스 목록에서 민감한 정보가 노출되는 위험성을 줄일 수 있다.",
+      "answer": true,
+      "explanation": "환경변수 방식과 달리 볼륨 마운트는 Secret 값을 파일 시스템에 파일로 저장하므로 ps 명령어 등으로 프로세스 목록을 조회해도 민감한 정보가 노출되지 않습니다."
+    },
+    {
+      "id": 3,
+      "type": "ox",
+      "question": "Secret의 base64 인코딩은 암호화이므로 RBAC 설정 없이도 충분히 안전하다.",
+      "answer": false,
+      "explanation": "base64는 단순 인코딩일 뿐 암호화가 아니므로 누구나 쉽게 디코딩할 수 있어, RBAC을 통한 접근 권한 제한이 반드시 필요합니다."
+    },
+    {
+      "id": 4,
+      "type": "multiple",
+      "question": "프라이빗 Docker 레지스트리에서 이미지를 pull하기 위해 Secret을 생성하는 올바른 kubectl 명령어는?",
+      "options": [
+        "kubectl create secret docker-registry my-secret --docker-server=registry.com --docker-username=user --docker-password=pass",
+        "kubectl create secret generic my-secret --docker-server=registry.com --docker-username=user --docker-password=pass",
+        "kubectl create secret tls my-secret --docker-server=registry.com --docker-username=user --docker-password=pass",
+        "kubectl create secret opaque my-secret --docker-server=registry.com --docker-username=user --docker-password=pass"
+      ],
+      "answer": 0,
+      "explanation": "프라이빗 레지스트리 인증 정보는 dockerconfigjson 타입의 Secret이 필요하며, 이는 kubectl create secret docker-registry 명령어로 생성합니다."
+    },
+    {
+      "id": 5,
+      "type": "multiple",
+      "question": "운영 환경에서 데이터베이스 패스워드가 담긴 Secret의 동적 업데이트가 필요한 상황에서 가장 적절한 방식은?",
+      "options": [
+        "Secret을 환경변수로 주입하고 정기적으로 Pod을 재시작한다",
+        "Secret을 볼륨으로 마운트하여 자동 업데이트를 활용한다",
+        "ConfigMap을 사용하여 패스워드를 관리한다",
+        "Secret을 Git 저장소에 저장하고 GitOps로 관리한다"
+      ],
+      "answer": 1,
+      "explanation": "볼륨으로 마운트된 Secret은 일정 시간 후 자동으로 업데이트되므로 Pod 재시작 없이 동적 업데이트가 가능하여 무중단 운영에 적합합니다."
+    }
+  ]
+}
