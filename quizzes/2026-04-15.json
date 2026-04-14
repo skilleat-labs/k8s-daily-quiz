@@ -1,0 +1,54 @@
+{
+  "date": "2026-04-15",
+  "title": "네임스페이스란? 네임스페이스를 왜 알아야하며, 클러스터에 네임스페이가 없다면 생기는일",
+  "description": "오늘 배운 내용을 확인해보세요!",
+  "questions": [
+    {
+      "id": 1,
+      "type": "ox",
+      "question": "네임스페이스를 지정하지 않고 kubectl apply로 리소스를 배포하면 kube-system 네임스페이스에 생성된다.",
+      "answer": false,
+      "explanation": "명시적으로 네임스페이스를 지정하지 않으면 default 네임스페이스에 생성되며, kube-system은 쿠버네티스 시스템 컴포넌트를 위한 전용 네임스페이스입니다."
+    },
+    {
+      "id": 2,
+      "type": "ox",
+      "question": "ResourceQuota를 사용하면 특정 네임스페이스가 사용할 수 있는 CPU, 메모리 등의 리소스 양을 제한할 수 있다.",
+      "answer": true,
+      "explanation": "ResourceQuota는 네임스페이스별로 리소스 사용량을 제한하여 한 팀이나 프로젝트가 과도한 리소스를 사용해 다른 팀에 영향을 주는 것을 방지합니다."
+    },
+    {
+      "id": 3,
+      "type": "ox",
+      "question": "같은 네임스페이스 내에서 Service가 다른 네임스페이스의 Pod와 통신하려면 Service의 FQDN을 사용해야 한다.",
+      "answer": true,
+      "explanation": "네임스페이스 간 통신 시에는 service-name.namespace.svc.cluster.local 형태의 FQDN을 사용해야 하며, 단순한 서비스명만으로는 다른 네임스페이스의 리소스에 접근할 수 없습니다."
+    },
+    {
+      "id": 4,
+      "type": "multiple",
+      "question": "production 환경에서 실수로 default 네임스페이스에 배포된 애플리케이션을 dev 네임스페이스로 이동하려고 할 때 가장 안전한 방법은?",
+      "options": [
+        "kubectl get 으로 리소스를 YAML로 추출한 후 네임스페이스를 수정하여 재배포하고 기존 리소스 삭제",
+        "kubectl patch 명령어로 기존 리소스의 네임스페이스 필드를 직접 수정",
+        "kubectl move 명령어를 사용하여 리소스를 다른 네임스페이스로 이동",
+        "kubectl edit으로 실행 중인 리소스의 네임스페이스를 바로 변경"
+      ],
+      "answer": 0,
+      "explanation": "쿠버네티스에서는 리소스의 네임스페이스를 직접 변경할 수 없으므로, YAML을 추출하여 네임스페이스를 수정한 후 새로 생성하고 기존 리소스를 삭제하는 것이 안전한 방법입니다."
+    },
+    {
+      "id": 5,
+      "type": "multiple",
+      "question": "RBAC 설정에서 특정 사용자가 dev 네임스페이스에만 접근할 수 있도록 제한하려면 어떤 리소스 조합이 필요한가?",
+      "options": [
+        "ClusterRole + ClusterRoleBinding",
+        "Role + RoleBinding",
+        "ServiceAccount + ClusterRoleBinding",
+        "NetworkPolicy + PodSecurityPolicy"
+      ],
+      "answer": 1,
+      "explanation": "특정 네임스페이스에만 권한을 부여하려면 Role(네임스페이스 범위의 권한 정의)과 RoleBinding(사용자와 Role 연결)을 사용해야 하며, ClusterRole은 클러스터 전체 권한에 사용됩니다."
+    }
+  ]
+}
