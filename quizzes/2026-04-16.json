@@ -1,0 +1,54 @@
+{
+  "date": "2024-04-16",
+  "title": "쿠버네티스 Namespace 실무 운영 이해도 점검",
+  "description": "실무에서 자주 마주치는 Namespace 관련 상황들을 확인해보세요!",
+  "questions": [
+    {
+      "id": 1,
+      "type": "ox",
+      "question": "개발 환경에서 Pod를 생성할 때 namespace를 지정하지 않으면, kubectl이 현재 context의 namespace를 자동으로 사용한다.",
+      "answer": false,
+      "explanation": "namespace를 지정하지 않으면 항상 default namespace가 사용됩니다. context에서 namespace를 설정했더라도 YAML에 명시적으로 지정하지 않으면 default로 생성됩니다."
+    },
+    {
+      "id": 2,
+      "type": "ox",
+      "question": "kube-system namespace에 있는 Pod가 장애로 삭제되면, 다른 namespace의 애플리케이션도 영향을 받을 수 있다.",
+      "answer": true,
+      "explanation": "kube-system에는 DNS, 네트워킹, 스케줄러 등 클러스터 전체 동작에 필수적인 시스템 컴포넌트들이 있어, 이들에 장애가 발생하면 모든 namespace의 애플리케이션이 영향받습니다."
+    },
+    {
+      "id": 3,
+      "type": "ox",
+      "question": "ResourceQuota를 설정한 namespace에서 CPU 한도를 초과하는 Pod를 생성하려고 하면, Pod는 생성되지만 Pending 상태로 남는다.",
+      "answer": false,
+      "explanation": "ResourceQuota 한도를 초과하는 리소스 요청은 API 서버 단계에서 거부되어 Pod 생성 자체가 실패합니다. Pending 상태가 아닌 생성 요청이 즉시 실패합니다."
+    },
+    {
+      "id": 4,
+      "type": "multiple",
+      "question": "운영 중인 클러스터에서 'production' namespace의 모든 Pod가 갑자기 접근할 수 없게 되었습니다. 가장 먼저 확인해야 할 명령어는?",
+      "options": [
+        "kubectl get pods -n production",
+        "kubectl get events -n production --sort-by=.metadata.creationTimestamp",
+        "kubectl describe namespace production",
+        "kubectl get resourcequota -n production"
+      ],
+      "answer": 1,
+      "explanation": "장애 상황에서는 events를 시간순으로 확인하여 최근 발생한 문제의 원인을 파악하는 것이 가장 효율적인 트러블슈팅 방법입니다."
+    },
+    {
+      "id": 5,
+      "type": "multiple",
+      "question": "dev namespace의 Service가 prod namespace의 데이터베이스 Pod에 연결하려고 할 때, 올바른 DNS 이름은?",
+      "options": [
+        "database-service.prod",
+        "database-service.prod.svc.cluster.local",
+        "prod.database-service.svc.cluster.local",
+        "database-service.prod.cluster.local"
+      ],
+      "answer": 1,
+      "explanation": "쿠버네티스의 DNS 규칙은 '서비스명.네임스페이스명.svc.cluster.local' 형식입니다. 다른 namespace의 서비스에 접근할 때는 반드시 네임스페이스를 포함해야 합니다."
+    }
+  ]
+}
