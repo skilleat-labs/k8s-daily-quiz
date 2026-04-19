@@ -1,0 +1,54 @@
+{
+  "date": "2026-04-20",
+  "title": "쿠버네티스란, pod,replicaset, deployment,service,endpointslices등에 대해서 이해하고 있는지 종합정리",
+  "description": "오늘 배운 내용을 확인해보세요!",
+  "questions": [
+    {
+      "id": 1,
+      "type": "ox",
+      "question": "Pod이 삭제되어도 같은 Pod 내의 데이터는 자동으로 보존되므로, 데이터베이스와 같은 상태가 있는 애플리케이션을 Pod에 직접 배포해도 문제없다.",
+      "answer": false,
+      "explanation": "Pod은 일시적인 성격을 가지며 언제든지 삭제되고 재생성될 수 있어 내부 데이터가 유실됩니다. 상태가 있는 애플리케이션은 PersistentVolume 등을 사용해야 합니다."
+    },
+    {
+      "id": 2,
+      "type": "ox",
+      "question": "Deployment에서 롤링 업데이트 중 새 버전에 문제가 발생하면, 기존 ReplicaSet이 그대로 남아있어 즉시 롤백이 가능하다.",
+      "answer": true,
+      "explanation": "Deployment는 업데이트 시 이전 버전의 ReplicaSet을 유지하므로 문제 발생 시 kubectl rollout undo 명령으로 빠르게 이전 버전으로 롤백할 수 있습니다."
+    },
+    {
+      "id": 3,
+      "type": "ox",
+      "question": "Service의 ClusterIP 타입은 클러스터 외부에서도 접근 가능하므로, 외부 사용자를 위한 웹 애플리케이션 서비스에 적합하다.",
+      "answer": false,
+      "explanation": "ClusterIP는 클러스터 내부에서만 접근 가능한 타입입니다. 외부 접근이 필요하다면 NodePort, LoadBalancer 또는 Ingress를 사용해야 합니다."
+    },
+    {
+      "id": 4,
+      "type": "multiple",
+      "question": "운영 중인 Deployment의 Pod 3개 중 1개가 계속 CrashLoopBackOff 상태입니다. 빠르게 현재 상태를 확인하고 문제를 파악하기 위한 가장 적절한 명령어 순서는?",
+      "options": [
+        "kubectl get pods → kubectl describe pod [pod-name] → kubectl logs [pod-name]",
+        "kubectl get deployment → kubectl rollout status → kubectl delete pod [pod-name]",
+        "kubectl get replicaset → kubectl scale deployment → kubectl restart deployment",
+        "kubectl get service → kubectl get endpoints → kubectl port-forward [pod-name]"
+      ],
+      "answer": 0,
+      "explanation": "장애 상황에서는 먼저 Pod 상태를 확인하고, describe로 이벤트를 확인한 후, logs로 애플리케이션 로그를 확인하는 순서가 문제 원인 파악에 가장 효과적입니다."
+    },
+    {
+      "id": 5,
+      "type": "multiple",
+      "question": "Service가 생성되었지만 Pod에 트래픽이 전달되지 않는 문제가 발생했습니다. Service와 Pod 간의 연결 상태를 확인하기 위해 가장 먼저 확인해야 할 것은?",
+      "options": [
+        "kubectl get configmap -o yaml",
+        "kubectl get endpoints 또는 kubectl get endpointslices",
+        "kubectl get ingress -o wide",
+        "kubectl get persistentvolumes"
+      ],
+      "answer": 1,
+      "explanation": "Service가 Pod으로 트래픽을 전달하지 못하는 경우, endpoints나 endpointslices를 확인하여 Service의 selector와 Pod의 label이 올바르게 매칭되는지 확인해야 합니다."
+    }
+  ]
+}
