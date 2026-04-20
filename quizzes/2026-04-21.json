@@ -1,0 +1,54 @@
+{
+  "date": "2026-04-21",
+  "title": "쿠버네티스란 무엇이며 클러스터 구성요소 정리",
+  "description": "오늘 배운 내용을 확인해보세요!",
+  "questions": [
+    {
+      "id": 1,
+      "type": "ox",
+      "question": "쿠버네티스의 Master Node는 클러스터 내 모든 네트워크 요청을 처리한다.",
+      "answer": true,
+      "explanation": "Master Node의 API Server는 클러스터와 상호작용하는 모든 작업의 진입점이며 외부 요청을 처리합니다."
+    },
+    {
+      "id": 2,
+      "type": "ox",
+      "question": "Worker Node는 클러스터의 상태를 조정하고 관리하는 역할을 담당한다.",
+      "answer": false,
+      "explanation": "Worker Node는 애플리케이션이 실행되는 곳으로, 클러스터의 상태를 조정하고 관리하는 역할은 Master Node가 수행합니다."
+    },
+    {
+      "id": 3,
+      "type": "ox",
+      "question": "kube-proxy는 Pod 간의 네트워크 통신을 처리하는 역할을 한다.",
+      "answer": true,
+      "explanation": "kube-proxy는 네트워크 작업을 처리하여 Pod 간의 통신 및 외부 통신을 지원합니다."
+    },
+    {
+      "id": 4,
+      "type": "multiple",
+      "question": "새로운 작업을 Worker Node에 할당하는 역할을 하는 쿠버네티스 구성 요소는 무엇인가요?",
+      "options": [
+        "kubelet",
+        "Scheduler",
+        "Controller Manager",
+        "kube-proxy"
+      ],
+      "answer": 1,
+      "explanation": "Scheduler는 새로운 작업을 Worker Node에 할당하는 역할을 수행합니다."
+    },
+    {
+      "id": 5,
+      "type": "multiple",
+      "question": "클러스터 외부의 트래픽을 서비스로 라우팅하기 위해 필수적인 쿠버네티스 구성 요소는 무엇인가요?",
+      "options": [
+        "kubelet",
+        "kube-proxy",
+        "API Server",
+        "Controller Manager"
+      ],
+      "answer": 1,
+      "explanation": "kube-proxy는 네트워크 트래픽을 처리하여 클러스터 외부와의 통신을 가능하게 합니다."
+    }
+  ]
+}
