@@ -480,7 +480,7 @@ let answers = [];
 function getTargetDate() {
   const params = new URLSearchParams(window.location.search);
   const d = params.get('date');
-  if (d && /^\d{4}-\d{2}-\d{2}$/.test(d)) return d;
+  if (d && /^\d{4}-\d{2}-\d{2}(-\d+)?$/.test(d)) return d;
   const now = new Date();
   const y = now.getFullYear();
   const mo = String(now.getMonth() + 1).padStart(2, '0');
