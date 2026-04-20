@@ -112,7 +112,7 @@ def generate_summary(client, topic):
 "쿠버네티스의 핵심은 원하는 상태를 선언하면, 그 상태를 실제로 맞추는 구조로 동작한다는 점입니다. 사용자가 Deployment와 같은 리소스를 생성하면, 이 요청은 API Server로 전달되고, etcd에 저장됩니다. 이때 우리는 실행을 명령하는 것이 아니라, 클러스터가 어떤 상태가 되길 원하는지 선언하는 것입니다. 실무에서는 이 차이를 모르고 Pod가 재시작될 때마다 kubectl run으로 직접 생성하려다 Deployment의 replicas 설정과 충돌하는 상황이 종종 발생합니다."
 
 ## 분량
-- 전체 1500~2500글자 사이
+- 전체 1500~2000글자 사이 (절대 2000글자를 넘지 말 것)
 
 ## 주제
 {topic}"""
@@ -122,8 +122,8 @@ def generate_summary(client, topic):
     return response.choices[0].message.content
 
 
-def split_text(text, max_chars=MAX_CHARS):
-    """텍스트를 max_chars 이하로 분할"""
+def split_text(text, max_chars=MAX_CHARS, max_chunks=5):
+    """텍스트를 max_chars 이하로 분할 (최대 max_chunks개)"""
     chunks = []
     current = ""
 
@@ -157,6 +157,11 @@ def split_text(text, max_chars=MAX_CHARS):
 
     if current.strip():
         chunks.append(current.strip())
+
+    # 최대 개수 초과 시 마지막 청크들을 합쳐서 max_chunks 개로 맞춤
+    if len(chunks) > max_chunks:
+        merged_last = "\n\n".join(chunks[max_chunks - 1:])
+        chunks = chunks[:max_chunks - 1] + [merged_last]
 
     return chunks
 
