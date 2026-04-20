@@ -1,0 +1,54 @@
+{
+  "date": "2026-04-21",
+  "title": "쿠버네티스란 무엇이며 클러스터 구성요소 정리",
+  "description": "오늘 배운 내용을 확인해보세요!",
+  "questions": [
+    {
+      "id": 1,
+      "type": "ox",
+      "question": "쿠버네티스에서 API Server가 다운되면 새로운 Pod를 생성할 수 없다.",
+      "answer": true,
+      "explanation": "API Server는 클러스터의 게이트웨이로 모든 요청을 처리하므로, 다운되면 새로운 Pod 생성이나 기존 Pod 조정이 불가능합니다."
+    },
+    {
+      "id": 2,
+      "type": "ox",
+      "question": "노드는 단순히 컨테이너를 실행하는 서버로, kubelet이나 kube-proxy와 같은 구성 요소는 필요하지 않다.",
+      "answer": false,
+      "explanation": "노드는 kubelet과 kube-proxy 등의 구성 요소가 함께 동작하여 클러스터의 일관성을 유지합니다. 이들이 없으면 클러스터 전체에 영향을 미칩니다."
+    },
+    {
+      "id": 3,
+      "type": "ox",
+      "question": "etcd의 데이터가 손실되면 클러스터 상태를 복구할 수 없다.",
+      "answer": true,
+      "explanation": "etcd는 클러스터의 모든 상태 정보를 저장하므로, 데이터 손실 시 클러스터 상태 복구가 불가능합니다. 따라서 백업이 필수적입니다."
+    },
+    {
+      "id": 4,
+      "type": "multiple",
+      "question": "쿠버네티스에서 노드의 상태를 확인하는 명령어는 무엇인가?",
+      "options": [
+        "kubectl get nodes",
+        "kubectl describe pod",
+        "kubectl get pods",
+        "kubectl describe node"
+      ],
+      "answer": 0,
+      "explanation": "kubectl get nodes 명령어는 클러스터 내 모든 노드의 상태를 확인합니다. 'kubectl describe pod'는 특정 Pod의 상세 정보를, 'kubectl get pods'는 Pod 목록을, 'kubectl describe node'는 특정 노드의 상세 정보를 제공합니다."
+    },
+    {
+      "id": 5,
+      "type": "multiple",
+      "question": "Pod가 적절한 노드에 배치되도록 하는 쿠버네티스 구성 요소는 무엇인가?",
+      "options": [
+        "API Server",
+        "Scheduler",
+        "Controller Manager",
+        "kubelet"
+      ],
+      "answer": 1,
+      "explanation": "Scheduler는 새로운 Pod를 적절한 노드에 배치하는 역할을 합니다. 'API Server'는 요청을 처리하고, 'Controller Manager'는 상태를 유지하며, 'kubelet'은 노드에서 Pod를 관리합니다."
+    }
+  ]
+}
