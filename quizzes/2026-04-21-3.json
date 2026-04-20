@@ -1,0 +1,54 @@
+{
+  "date": "2026-04-21",
+  "title": "service의 한계, 그리고 ingress와 gatewayAPI, 실무에서 무조건 알고있어야할 내용",
+  "description": "오늘 배운 내용을 확인해보세요!",
+  "questions": [
+    {
+      "id": 1,
+      "type": "ox",
+      "question": "Service는 클러스터 외부에서 들어오는 트래픽을 직접 관리할 수 있다.",
+      "answer": false,
+      "explanation": "Service는 클러스터 내부의 Pod 간 통신을 관리하는 데 주로 사용되며, 외부 트래픽 관리는 Ingress나 Gateway API가 필요합니다."
+    },
+    {
+      "id": 2,
+      "type": "ox",
+      "question": "Ingress는 HTTP 및 HTTPS 요청을 클러스터 내의 여러 Service로 라우팅할 수 있다.",
+      "answer": true,
+      "explanation": "Ingress는 HTTP 및 HTTPS 요청을 처리하며, URL 경로 기반 라우팅, SSL 종료, 호스트 기반 라우팅 등의 기능을 제공합니다."
+    },
+    {
+      "id": 3,
+      "type": "ox",
+      "question": "Gateway API는 모든 쿠버네티스 환경에서 완전히 지원되므로, Ingress를 대체할 수 있다.",
+      "answer": false,
+      "explanation": "Gateway API는 아직 모든 환경에서 완전히 지원되지 않을 수 있으며, Ingress와의 호환성을 충분히 검토해야 합니다."
+    },
+    {
+      "id": 4,
+      "type": "multiple",
+      "question": "Ingress 리소스의 상태를 확인하기 위해 사용하는 명령어는 무엇인가요?",
+      "options": [
+        "kubectl get ingress",
+        "kubectl describe service",
+        "kubectl get pods",
+        "kubectl describe nodes"
+      ],
+      "answer": 0,
+      "explanation": "Ingress 리소스의 상태를 확인하기 위해서는 'kubectl get ingress' 명령어를 사용합니다. 다른 옵션들은 각각 서비스, 파드, 노드의 상태를 확인하는 명령어입니다."
+    },
+    {
+      "id": 5,
+      "type": "multiple",
+      "question": "Ingress 리소스를 설정할 때, 외부 트래픽이 올바르게 라우팅되도록 하기 위해 주의해야 할 설정은 무엇인가요?",
+      "options": [
+        "spec.ports 필드에 올바른 포트를 지정",
+        "spec.rules 필드에 정확한 경로와 호스트 지정",
+        "metadata.labels 필드에 라벨 추가",
+        "spec.selector 필드에 올바른 셀렉터 지정"
+      ],
+      "answer": 1,
+      "explanation": "Ingress 리소스에서 외부 트래픽이 올바르게 라우팅되도록 하려면 'spec.rules' 필드에 정확한 경로와 호스트를 지정해야 합니다. 다른 옵션들은 Ingress 설정과 직접적인 관련이 없습니다."
+    }
+  ]
+}
