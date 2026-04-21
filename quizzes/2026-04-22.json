@@ -1,0 +1,54 @@
+{
+  "date": "2026-04-22",
+  "title": "Pod에대한 모든것, 꼭 알아야할 개념정리",
+  "description": "오늘 배운 내용을 확인해보세요!",
+  "questions": [
+    {
+      "id": 1,
+      "type": "ox",
+      "question": "Pod 내의 모든 컨테이너는 항상 같은 네트워크 네임스페이스에서 실행되며, 서로 다른 Pod의 컨테이너와도 localhost로 통신할 수 있다.",
+      "answer": false,
+      "explanation": "Pod 내의 컨테이너는 같은 네트워크 네임스페이스에서 실행되어 localhost로 서로 통신할 수 있지만, 서로 다른 Pod의 컨테이너는 localhost로 통신할 수 없습니다."
+    },
+    {
+      "id": 2,
+      "type": "ox",
+      "question": "Pod는 생성 후 언제든지 삭제되거나 재시작될 수 있으므로, 영구적인 데이터는 Pod 내에 저장하지 않는 것이 좋다.",
+      "answer": true,
+      "explanation": "Pod는 일시적인 존재이므로, 영구적인 데이터는 PersistentVolume이나 PersistentVolumeClaim을 사용하여 저장해야 합니다."
+    },
+    {
+      "id": 3,
+      "type": "ox",
+      "question": "Pod의 리소스 요청과 제한을 동일하게 설정하면 노드의 리소스를 효율적으로 사용할 수 있다.",
+      "answer": false,
+      "explanation": "리소스 요청과 제한을 동일하게 설정하면 리소스가 비효율적으로 사용될 수 있으며, 노드에 리소스가 부족할 때 Pod가 스케줄되지 않을 수 있습니다."
+    },
+    {
+      "id": 4,
+      "type": "multiple",
+      "question": "Pod의 상태를 확인하기 위해 사용할 수 있는 kubectl 명령어는 무엇인가요?",
+      "options": [
+        "kubectl get pods",
+        "kubectl list pods",
+        "kubectl show pods",
+        "kubectl describe pods"
+      ],
+      "answer": 0,
+      "explanation": "Pod의 상태를 확인하려면 'kubectl get pods' 명령어를 사용합니다. 'kubectl describe pods'는 Pod의 상세 정보를 확인할 때 사용합니다."
+    },
+    {
+      "id": 5,
+      "type": "multiple",
+      "question": "Pod의 리소스 요청과 제한을 설정할 때, 리소스 요청은 무엇을 나타내나요?",
+      "options": [
+        "Pod가 사용할 수 있는 최대 리소스",
+        "Pod가 실행되기 위해 필요한 최소한의 리소스",
+        "Pod가 현재 사용 중인 리소스",
+        "Pod가 요청할 수 있는 리소스의 평균값"
+      ],
+      "answer": 1,
+      "explanation": "리소스 요청은 Pod가 실행되기 위해 필요한 최소한의 리소스를 나타냅니다. 제한은 Pod가 사용할 수 있는 최대 리소스를 정의합니다."
+    }
+  ]
+}
