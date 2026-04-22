@@ -1,0 +1,54 @@
+{
+  "date": "2026-04-23",
+  "title": "replicaset과 deployment개념",
+  "description": "오늘 배운 내용을 확인해보세요!",
+  "questions": [
+    {
+      "id": 1,
+      "type": "ox",
+      "question": "Deployment를 삭제하면 관련된 ReplicaSet과 Pod도 함께 삭제된다.",
+      "answer": true,
+      "explanation": "Deployment를 삭제하면 해당 Deployment가 관리하는 모든 ReplicaSet과 그에 속한 Pod도 함께 삭제됩니다. 이는 kubectl delete deployment 명령어로 확인할 수 있습니다."
+    },
+    {
+      "id": 2,
+      "type": "ox",
+      "question": "ReplicaSet은 직접적으로 롤링 업데이트를 관리할 수 있다.",
+      "answer": false,
+      "explanation": "ReplicaSet은 Pod의 수를 유지하는 역할만 하며, 롤링 업데이트와 같은 고급 기능은 Deployment를 통해서만 가능합니다."
+    },
+    {
+      "id": 3,
+      "type": "ox",
+      "question": "Deployment를 업데이트할 때 새로운 ReplicaSet이 생성되며, 기존 Pod는 점진적으로 교체된다.",
+      "answer": true,
+      "explanation": "Deployment 업데이트 시 새로운 ReplicaSet이 생성되고, 기존 Pod는 새로운 Pod로 점진적으로 교체되어 애플리케이션의 가용성을 유지합니다."
+    },
+    {
+      "id": 4,
+      "type": "multiple",
+      "question": "Deployment 업데이트 후 문제가 발생했을 때, 롤백을 수행하는 올바른 명령어는 무엇인가요?",
+      "options": [
+        "kubectl apply -f deployment.yaml",
+        "kubectl rollout undo deployment/my-deployment",
+        "kubectl delete deployment/my-deployment",
+        "kubectl scale deployment/my-deployment --replicas=0"
+      ],
+      "answer": 1,
+      "explanation": "kubectl rollout undo deployment/my-deployment 명령어는 Deployment의 이전 상태로 롤백을 수행합니다. 다른 옵션은 롤백과 관련이 없습니다."
+    },
+    {
+      "id": 5,
+      "type": "multiple",
+      "question": "Deployment의 상태를 모니터링하기 위한 명령어는 무엇인가요?",
+      "options": [
+        "kubectl get pods",
+        "kubectl rollout status deployment/my-deployment",
+        "kubectl describe deployment/my-deployment",
+        "kubectl logs deployment/my-deployment"
+      ],
+      "answer": 1,
+      "explanation": "kubectl rollout status deployment/my-deployment 명령어는 Deployment의 현재 상태를 모니터링하는 데 사용됩니다. 다른 옵션은 상태 모니터링과 직접 관련이 없습니다."
+    }
+  ]
+}
