@@ -1,0 +1,54 @@
+{
+  "date": "2026-04-24",
+  "title": "service, service 타입, flat한 네트워크",
+  "description": "오늘 배운 내용을 확인해보세요!",
+  "questions": [
+    {
+      "id": 1,
+      "type": "ox",
+      "question": "Service는 Pod의 상태를 모니터링하여 비정상적인 Pod를 자동으로 제외한다.",
+      "answer": false,
+      "explanation": "Service는 Pod의 상태를 직접 모니터링하지 않습니다. Pod의 상태 관리는 Liveness Probe와 Readiness Probe를 통해 이루어지며, Service는 이러한 Probe의 결과를 기반으로 트래픽을 라우팅합니다."
+    },
+    {
+      "id": 2,
+      "type": "ox",
+      "question": "ClusterIP 타입의 Service는 클러스터 외부에서 접근할 수 없다.",
+      "answer": true,
+      "explanation": "ClusterIP 타입의 Service는 클러스터 내부에서만 접근 가능한 IP를 제공합니다. 따라서 외부에서는 직접 접근할 수 없습니다."
+    },
+    {
+      "id": 3,
+      "type": "ox",
+      "question": "NodePort 타입의 Service는 모든 노드의 특정 포트를 개방하므로 방화벽 설정이 필요하다.",
+      "answer": true,
+      "explanation": "NodePort 타입은 각 노드의 특정 포트를 외부에 개방하므로 보안과 네트워크 설정에 주의해야 하며, 방화벽 설정이 필요합니다."
+    },
+    {
+      "id": 4,
+      "type": "multiple",
+      "question": "kubectl 명령어를 사용하여 Deployment에 대한 Service를 생성하려면 어떤 명령어를 사용해야 하는가?",
+      "options": [
+        "kubectl create service",
+        "kubectl expose deployment",
+        "kubectl apply -f service.yaml",
+        "kubectl run service"
+      ],
+      "answer": 1,
+      "explanation": "kubectl expose deployment 명령어를 사용하여 Deployment에 대한 Service를 생성할 수 있습니다. 다른 옵션들은 Service 생성과 관련이 없거나 잘못된 명령어입니다."
+    },
+    {
+      "id": 5,
+      "type": "multiple",
+      "question": "Service의 spec.type 필드를 통해 설정할 수 없는 타입은 무엇인가?",
+      "options": [
+        "ClusterIP",
+        "Ingress",
+        "NodePort",
+        "LoadBalancer"
+      ],
+      "answer": 1,
+      "explanation": "Ingress는 Service의 타입이 아니라 리소스의 한 종류입니다. Service의 타입으로는 ClusterIP, NodePort, LoadBalancer 등이 있습니다."
+    }
+  ]
+}
