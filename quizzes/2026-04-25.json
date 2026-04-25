@@ -1,0 +1,54 @@
+{
+  "date": "2026-04-25",
+  "title": "pod,rs,deploy,service 최종정리",
+  "description": "오늘 배운 내용을 확인해보세요!",
+  "questions": [
+    {
+      "id": 1,
+      "type": "ox",
+      "question": "Pod는 장애가 발생하면 자동으로 복구되며, 동일한 Pod가 다시 시작된다.",
+      "answer": false,
+      "explanation": "Pod는 본질적으로 일시적이며, 장애가 발생하면 동일한 Pod가 아닌 새로운 Pod가 생성됩니다."
+    },
+    {
+      "id": 2,
+      "type": "ox",
+      "question": "Deployment를 통해 애플리케이션을 배포할 때, spec.template.spec을 수정하면 새로운 ReplicaSet이 생성된다.",
+      "answer": true,
+      "explanation": "Deployment의 spec.template.spec을 수정하면 새로운 ReplicaSet이 생성되어 롤링 업데이트가 수행됩니다."
+    },
+    {
+      "id": 3,
+      "type": "ox",
+      "question": "Service는 Pod의 IP 주소가 변하더라도 지속적인 네트워크 접근을 보장한다.",
+      "answer": true,
+      "explanation": "Service는 Pod에 고정된 IP 주소를 제공하여, Pod의 IP가 변하더라도 지속적인 네트워크 접근을 가능하게 합니다."
+    },
+    {
+      "id": 4,
+      "type": "multiple",
+      "question": "kubectl을 사용하여 Deployment를 생성하려고 합니다. 올바른 명령어는 무엇인가요?",
+      "options": [
+        "kubectl create deployment <deployment-name> --image=<image>",
+        "kubectl run <deployment-name> --image=<image>",
+        "kubectl apply -f <deployment-file>.yaml",
+        "kubectl expose deployment <deployment-name> --port=80"
+      ],
+      "answer": 2,
+      "explanation": "Deployment를 생성하고 관리하려면 kubectl apply -f <deployment-file>.yaml 명령어를 사용합니다. 다른 옵션들은 Deployment 생성과 직접 관련이 없습니다."
+    },
+    {
+      "id": 5,
+      "type": "multiple",
+      "question": "ReplicaSet의 Pod 수를 조정하려고 합니다. 올바른 명령어는 무엇인가요?",
+      "options": [
+        "kubectl edit rs <replicaset-name>",
+        "kubectl scale rs <replicaset-name> --replicas=3",
+        "kubectl update rs <replicaset-name> --replicas=3",
+        "kubectl set replicas rs/<replicaset-name> --replicas=3"
+      ],
+      "answer": 1,
+      "explanation": "ReplicaSet의 Pod 수를 조정하려면 kubectl scale rs <replicaset-name> --replicas=3 명령어를 사용합니다. 다른 옵션들은 잘못된 명령어입니다."
+    }
+  ]
+}
