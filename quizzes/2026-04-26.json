@@ -1,0 +1,54 @@
+{
+  "date": "2026-04-26",
+  "title": "네임스페이스 정리",
+  "description": "오늘 배운 내용을 확인해보세요!",
+  "questions": [
+    {
+      "id": 1,
+      "type": "ox",
+      "question": "네임스페이스는 쿠버네티스 클러스터 내 리소스의 물리적 격리를 제공한다.",
+      "answer": false,
+      "explanation": "네임스페이스는 리소스의 논리적 구분만 제공하며, 물리적 격리는 네트워크 정책이나 RBAC 설정을 통해 이루어집니다."
+    },
+    {
+      "id": 2,
+      "type": "ox",
+      "question": "kubectl 명령어로 리소스를 생성할 때 네임스페이스를 지정하지 않으면 'default' 네임스페이스에 생성된다.",
+      "answer": true,
+      "explanation": "네임스페이스를 지정하지 않으면 기본적으로 'default' 네임스페이스에 리소스가 생성되므로 주의가 필요합니다."
+    },
+    {
+      "id": 3,
+      "type": "ox",
+      "question": "네임스페이스를 생성한 후에는 API Server에 자동으로 등록되며, 별도의 추가 작업이 필요 없다.",
+      "answer": true,
+      "explanation": "네임스페이스를 생성하면 API Server에 자동으로 등록되며, 이후 리소스를 생성할 때 명시적으로 네임스페이스를 지정하면 됩니다."
+    },
+    {
+      "id": 4,
+      "type": "multiple",
+      "question": "다음 중 네임스페이스를 생성하는 올바른 kubectl 명령어는 무엇인가?",
+      "options": [
+        "kubectl create namespace mynamespace",
+        "kubectl apply namespace mynamespace",
+        "kubectl new namespace mynamespace",
+        "kubectl init namespace mynamespace"
+      ],
+      "answer": 0,
+      "explanation": "네임스페이스를 생성할 때는 'kubectl create namespace [네임스페이스 이름]' 명령어를 사용합니다. 다른 옵션들은 존재하지 않는 명령어입니다."
+    },
+    {
+      "id": 5,
+      "type": "multiple",
+      "question": "네임스페이스를 지정하여 리소스를 생성할 때 사용하는 올바른 명령어는 무엇인가?",
+      "options": [
+        "kubectl apply -f myresource.yaml",
+        "kubectl apply -f myresource.yaml --namespace=mynamespace",
+        "kubectl create -f myresource.yaml --namespace=mynamespace",
+        "kubectl run -f myresource.yaml --namespace=mynamespace"
+      ],
+      "answer": 1,
+      "explanation": "'kubectl apply -f [파일명] --namespace=[네임스페이스 이름]' 명령어를 사용하여 특정 네임스페이스에 리소스를 생성합니다. 다른 옵션들은 명령어 형식이 잘못되었거나 사용하지 않는 방식입니다."
+    }
+  ]
+}
