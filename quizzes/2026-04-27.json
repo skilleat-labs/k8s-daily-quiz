@@ -1,0 +1,54 @@
+{
+  "date": "2026-04-27",
+  "title": "입문자가 이해할 수 있도록 ingress에 대해서 정리해줘",
+  "description": "오늘 배운 내용을 확인해보세요!",
+  "questions": [
+    {
+      "id": 1,
+      "type": "ox",
+      "question": "Ingress 리소스를 정의하면 Ingress Controller가 자동으로 설치된다.",
+      "answer": false,
+      "explanation": "Ingress 리소스를 정의하는 것만으로는 Ingress Controller가 자동으로 설치되지 않습니다. Ingress가 동작하려면 별도로 Ingress Controller를 설치해야 합니다."
+    },
+    {
+      "id": 2,
+      "type": "ox",
+      "question": "Ingress는 기본적으로 L7 HTTP/HTTPS 트래픽을 처리하며, TCP/UDP 트래픽은 처리하지 않는다.",
+      "answer": true,
+      "explanation": "Ingress는 주로 L7 계층의 HTTP/HTTPS 트래픽을 처리하도록 설계되었습니다. TCP/UDP와 같은 L4 트래픽을 처리하려면 다른 방법이 필요합니다."
+    },
+    {
+      "id": 3,
+      "type": "ox",
+      "question": "Ingress Controller가 설치되어 있지 않으면 Ingress 리소스는 아무런 효과가 없다.",
+      "answer": true,
+      "explanation": "Ingress 리소스는 Ingress Controller가 있어야만 동작합니다. Controller가 설치되지 않으면 외부 트래픽을 서비스로 라우팅할 수 없습니다."
+    },
+    {
+      "id": 4,
+      "type": "multiple",
+      "question": "Ingress Controller가 제대로 동작하는지 확인하기 위한 명령어는 무엇인가?",
+      "options": [
+        "kubectl get pods --namespace kube-system",
+        "kubectl describe ingress",
+        "kubectl get services --namespace ingress-nginx",
+        "kubectl logs ingress-controller"
+      ],
+      "answer": 0,
+      "explanation": "Ingress Controller가 정상적으로 실행 중인지 확인하려면 'kubectl get pods --namespace kube-system' 명령어를 사용하여 해당 네임스페이스에서 Pod 상태를 확인할 수 있습니다. 나머지 옵션은 Ingress 리소스나 서비스 상태를 확인하는 데 사용됩니다."
+    },
+    {
+      "id": 5,
+      "type": "multiple",
+      "question": "Ingress 설정 시 주의해야 할 점으로 올바른 것은?",
+      "options": [
+        "Ingress 리소스만 정의하면 모든 트래픽이 자동으로 라우팅된다.",
+        "Ingress Controller의 배포 상태를 항상 확인해야 한다.",
+        "Ingress는 TCP/UDP 트래픽을 기본적으로 처리한다.",
+        "Ingress는 클러스터 내부의 Pod를 외부에 노출시킨다."
+      ],
+      "answer": 1,
+      "explanation": "Ingress 설정 시 Ingress Controller의 배포 상태를 항상 확인해야 합니다. Ingress 리소스만으로는 트래픽이 라우팅되지 않으며, Ingress는 기본적으로 HTTP/HTTPS 트래픽을 처리합니다. 또한, Ingress는 Pod를 직접 노출시키지 않고 서비스로 트래픽을 전달합니다."
+    }
+  ]
+}
