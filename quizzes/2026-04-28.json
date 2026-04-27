@@ -1,0 +1,54 @@
+{
+  "date": "2026-04-28",
+  "title": "볼륨이란, pv,pvc,storageclass",
+  "description": "오늘 배운 내용을 확인해보세요!",
+  "questions": [
+    {
+      "id": 1,
+      "type": "ox",
+      "question": "Pod가 삭제되면 해당 Pod에 연결된 모든 볼륨도 자동으로 삭제된다.",
+      "answer": false,
+      "explanation": "Pod가 삭제되면 EmptyDir 볼륨은 사라지지만, PersistentVolume은 PVC와의 바인딩 상태에 따라 유지될 수 있습니다."
+    },
+    {
+      "id": 2,
+      "type": "ox",
+      "question": "PersistentVolumeClaim(PVC)이 생성되면, 동적 프로비저닝이 설정되어 있지 않으면 기존 PersistentVolume(PV) 중에서 적절한 것을 찾아 바인딩한다.",
+      "answer": true,
+      "explanation": "PVC는 기존 PV 중에서 요구사항에 맞는 것을 찾아 바인딩하며, 동적 프로비저닝이 설정되지 않으면 새로운 PV는 생성되지 않습니다."
+    },
+    {
+      "id": 3,
+      "type": "ox",
+      "question": "StorageClass를 사용하면 PVC가 생성될 때 자동으로 PV가 생성될 수 있다.",
+      "answer": true,
+      "explanation": "StorageClass는 동적 프로비저닝을 통해 PVC 생성 시 자동으로 PV를 생성할 수 있는 템플릿 역할을 합니다."
+    },
+    {
+      "id": 4,
+      "type": "multiple",
+      "question": "PVC가 Pending 상태로 남아있는 경우 가장 먼저 확인해야 할 사항은 무엇인가요?",
+      "options": [
+        "클러스터 내에 적절한 PV가 있는지 확인한다.",
+        "Pod의 상태를 확인한다.",
+        "kubectl apply 명령어를 다시 실행한다.",
+        "클러스터의 노드 수를 확인한다."
+      ],
+      "answer": 0,
+      "explanation": "PVC가 Pending 상태인 경우, 가장 먼저 클러스터 내에 PVC 요구사항을 충족하는 PV가 있는지 확인해야 합니다. 나머지 옵션은 PVC의 Pending 상태와 직접적인 관련이 없습니다."
+    },
+    {
+      "id": 5,
+      "type": "multiple",
+      "question": "StorageClass 설정 오류로 인해 PVC가 바인딩되지 않는 경우, 어떤 조치를 취해야 할까요?",
+      "options": [
+        "PVC를 삭제하고 다시 생성한다.",
+        "StorageClass 설정을 검토하고 수정한다.",
+        "kubectl get nodes 명령어로 노드 상태를 확인한다.",
+        "클러스터를 재시작한다."
+      ],
+      "answer": 1,
+      "explanation": "StorageClass 설정 오류로 PVC가 바인딩되지 않는 경우, 설정을 검토하고 수정하는 것이 중요합니다. 다른 옵션은 문제 해결에 직접적인 도움이 되지 않습니다."
+    }
+  ]
+}
