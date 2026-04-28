@@ -1,0 +1,54 @@
+{
+  "date": "2026-04-29",
+  "title": "configmap과 secret 실무적으로 필요한 내용 정리",
+  "description": "오늘 배운 내용을 확인해보세요!",
+  "questions": [
+    {
+      "id": 1,
+      "type": "ox",
+      "question": "ConfigMap이나 Secret이 업데이트되면 이를 사용하는 Pod는 자동으로 변경 사항을 인식한다.",
+      "answer": false,
+      "explanation": "ConfigMap이나 Secret이 업데이트되더라도 이를 사용하는 Pod는 자동으로 변경 사항을 인식하지 않습니다. Pod를 재시작하거나 Deployment의 rolling update를 통해 변경 사항을 적용해야 합니다."
+    },
+    {
+      "id": 2,
+      "type": "ox",
+      "question": "Secret은 기본적으로 base64로 인코딩되어 저장되며, 이는 암호화된 상태를 의미한다.",
+      "answer": false,
+      "explanation": "Secret은 base64로 인코딩되어 저장되지만, 이는 암호화가 아닙니다. 따라서 추가적인 보안 조치를 고려해야 합니다."
+    },
+    {
+      "id": 3,
+      "type": "ox",
+      "question": "ConfigMap과 Secret은 네임스페이스 단위로 관리되며, 서로 다른 네임스페이스의 Pod는 동일한 ConfigMap이나 Secret을 참조할 수 없다.",
+      "answer": true,
+      "explanation": "ConfigMap과 Secret은 네임스페이스 단위로 관리되기 때문에, 서로 다른 네임스페이스에 있는 Pod가 동일한 ConfigMap이나 Secret을 참조할 수 없습니다."
+    },
+    {
+      "id": 4,
+      "type": "multiple",
+      "question": "ConfigMap을 생성하여 애플리케이션의 설정을 관리하려고 한다. 올바른 kubectl 명령어는 무엇인가?",
+      "options": [
+        "kubectl create configmap my-config --from-literal=key=value",
+        "kubectl apply configmap my-config --from-literal=key=value",
+        "kubectl set configmap my-config --from-literal=key=value",
+        "kubectl update configmap my-config --from-literal=key=value"
+      ],
+      "answer": 0,
+      "explanation": "ConfigMap을 생성할 때는 'kubectl create configmap' 명령어를 사용합니다. 'apply', 'set', 'update'는 ConfigMap 생성에 사용되지 않습니다."
+    },
+    {
+      "id": 5,
+      "type": "multiple",
+      "question": "Secret을 Pod에 마운트할 때 주의해야 할 점은 무엇인가?",
+      "options": [
+        "Secret은 반드시 환경 변수로만 주입해야 한다.",
+        "Secret의 접근 권한을 최소화하여 민감한 정보 노출을 방지해야 한다.",
+        "Secret은 항상 ConfigMap과 함께 사용해야 한다.",
+        "Secret은 base64 인코딩만으로 충분히 안전하다."
+      ],
+      "answer": 1,
+      "explanation": "Secret을 Pod에 마운트할 때는 접근 권한을 최소화하여 민감한 정보가 노출되지 않도록 해야 합니다. 환경 변수로만 주입해야 한다거나 ConfigMap과 함께 사용해야 한다는 제한은 없으며, base64 인코딩만으로는 충분히 안전하지 않습니다."
+    }
+  ]
+}
